@@ -1,0 +1,43 @@
+# Distributed Computing in Satellite Tracking
+
+## Introduction
+
+Satellite tracking involves computing the positions of multiple satellites over a period, which can be computationally intensive. In this project, we use Dask for distributed computing to parallelize these computations, significantly reducing the total computation time.
+
+## How Distributed Computing Helps
+
+### Problem
+
+The task involves calculating satellite positions for one day at one-minute intervals for 30 satellites using TLE data. Performing this sequentially would be time-consuming due to the high number of calculations required.
+
+### Solution: Distributed Computing with Dask
+
+Dask is a parallel computing library that allows us to divide large computations into smaller tasks that can be processed concurrently. Here’s how it helps:
+
+1. **Task Division**: 
+   - The list of satellites is divided into chunks, with each chunk being a subset of satellites.
+   - These chunks are processed independently, allowing multiple satellite position calculations to occur simultaneously.
+
+2. **Parallel Processing**:
+   - Dask uses Python’s multiprocessing capabilities to run these chunks in parallel, leveraging multiple CPU cores.
+   - By distributing the workload, each CPU core handles a portion of the computations, thus speeding up the overall process.
+
+### Performance Improvement
+
+By utilizing Dask, the computation time is significantly reduced:
+- **Sequential Processing**: Processing all satellites sequentially would require computing positions for each satellite one by one, resulting in a linear increase in computation time as the number of satellites increases.
+- **Parallel Processing**: With Dask, the computation time is reduced as the tasks are distributed across multiple CPU cores. For instance, if there are 8 CPU cores, the computation time can be approximately reduced to 1/8th of the sequential processing time.
+
+### Example
+
+Without Dask (Sequential):
+- Time taken for one satellite: 1 minute
+- Total time for 30 satellites: 30 minutes
+
+With Dask (Distributed over 8 cores):
+- Time taken for one satellite: 1 minute
+- Total time for 30 satellites: Approximately 3.75 minutes (30 minutes / 8 cores)
+
+## Conclusion
+
+Distributed computing with Dask enables efficient parallel processing of satellite position calculations, significantly reducing computation time and making it feasible to handle large-scale satellite tracking tasks in a reasonable timeframe.
